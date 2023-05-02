@@ -18,7 +18,7 @@ public:
     explicit AsyncHelper( std::shared_ptr<Coroutines::ThreadPool> threadPool );
     ~AsyncHelper() override;
 
-    Q_INVOKABLE void runAsync( QVariant jsTask );
+    Q_INVOKABLE void runAsync( const QVariant& jsTask );
 
 private:
     std::shared_ptr<Coroutines::ThreadPool> m_threadPool;

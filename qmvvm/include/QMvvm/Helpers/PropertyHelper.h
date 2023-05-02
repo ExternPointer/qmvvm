@@ -68,3 +68,10 @@ Q_SIGNALS:                                                                      
                                                                                                                                                                \
 private:                                                                                                                                                       \
     std::unique_ptr<type> m_##name;
+
+#define Q_INVOKABLE_ASYNC_2ARGS( qmlMethod, method, type1, name1, type2, name2 )                                                                               \
+    inline Q_INVOKABLE std::shared_ptr<Task<void>> qmlMethod( const type1& name1, const type2& name2 ) {                                                       \
+        auto task = this->method( name1, name2 );                                                                                                              \
+        return std::make_shared<Task<void>>( std::move( task ) );                                                                                              \
+    }                                                                                                                                                          \
+    Task<void> method( type1 name1, type2 name2 );
