@@ -17,6 +17,6 @@ AsyncHelper::~AsyncHelper() {
     qDebug() << "AsyncHelper destroyed";
 }
 
-void AsyncHelper::runAsync( QVariant task ) {
-    RunAsync( std::move( *( (Task<void>*)task.constData() ) ), this->m_threadPool );
+void AsyncHelper::runAsync( const QVariant& task ) {
+    RunAsync( std::move( *( *(std::shared_ptr<Task<void>>*)task.constData() ) ), this->m_threadPool );
 }
