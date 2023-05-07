@@ -14,7 +14,7 @@ DispatcherService::~DispatcherService() {
 }
 
 void DispatcherService::DispatchToMainThread( std::function<void()> task ) {
-    QTimer* timer = new QTimer();
+    auto timer = new QTimer();
     timer->moveToThread( this->m_applicationService->GetApplication()->thread() );
     timer->setSingleShot( true );
     QObject::connect( timer, &QTimer::timeout, [ = ]() {
