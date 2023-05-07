@@ -55,10 +55,13 @@ private:
             operation->m_awaitingCoroutine.resume();
             return;
         }
-        QTimer* timer = new QTimer();
+        auto timer = new QTimer();
         timer->moveToThread( applicationService->GetApplication()->thread() );
         timer->setSingleShot( true );
-        QObject::connect( timer, &QTimer::timeout, [ = ]() { operation->m_awaitingCoroutine.resume(); } );
+        QObject::connect( timer, &QTimer::timeout, [ = ]() {
+            operation->m_awaitingCoroutine.resume();
+            timer->deleteLater();
+        } );
         QMetaObject::invokeMethod( timer, "start", Qt::QueuedConnection, Q_ARG( int, 0 ) );
     }
 
